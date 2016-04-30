@@ -1,19 +1,19 @@
 export const addNote = ({dispatch}) => {
-	dispatch('add')
+	dispatch('ADD')
 }
 
 export const editNote = ({dispatch}, e) => {
-	dispatch('edit', e.target.value)
+	dispatch('EDIT', e.target.value)
 }
 
 export const deleteNote = ({dispatch}) => {
-	dispatch('delete')
+	dispatch('DELETE')
 }
 
 export const updateNote = ({dispatch}, note) => {
-	dispatch('set_active', note)
+	dispatch('SET_ACTIVE', note)
 }
 
 export const favoriteNote = ({dispatch}) => {
-	dispatch('favorite')
+	dispatch('FAVORITE')
 }

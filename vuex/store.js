@@ -18,7 +18,7 @@ const state = {
 }
 
 const mutations = {
-	add: function(state) {
+	ADD: function(state) {
 		const newNote = {
 			text: 'New note',
 			favorite: false
@@ -26,17 +26,17 @@ const mutations = {
 		state.notes.push(newNote)
 		state.activeNote = newNote
 	},
-	edit: function(state, text) {
+	EDIT: function(state, text) {
 		state.activeNote.text = text
 	},
-	delete: function(state) {
+	DELETE: function(state) {
 		state.notes.$remove(state.activeNote)
 		state.activeNote = state.notes[0]
 	},
-	favorite: function(state) {
+	FAVORITE: function(state) {
 		state.activeNote.favorite = !state.activeNote.favorite
 	},
-	set_active: function(state, note) {
+	SET_ACTIVE: function(state, note) {
 		state.activeNote = note
 	}
 }
