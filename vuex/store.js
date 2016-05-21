@@ -1,21 +1,27 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import firebase from 'firebase'
 
 Vue.use(Vuex)
 
-const state = {
-	notes: [
-	  {
-	    "text": "this is more than imagenation, i will go first heading in my faction",
-	    "favorite": false
-	  },
-	  {
-	    "text": "wow, this is so wonderful",
-	    "favorite": true
-	  }
-	],
-	activeNote: {}
-}
+firebase.initializeApp({
+	apiKey: 'radiant-inferno-8201',
+  databaseURL: 'https://radiant-inferno-8201.firebaseio.com',
+  serviceAccount: 'path/to/serviceAccountCredentials.json'
+});
+
+const db = firebase.database(),
+	ref = db.ref('saving-data/notes'),
+	state = {
+		notes: {},
+		activeNote: {},
+		activeKey: ''
+	};
+
+ref.on("value", function(snapshot) {
+  state.notes = snapshot.val();
+});
+
 
 const mutations = {
 	ADD: function(state) {
@@ -23,20 +29,29 @@ const mutations = {
 			text: 'New note',
 			favorite: false
 		}
-		state.notes.push(newNote)
+
+		var addRef = ref.push()
+
+		state.activeKey = addRef.key
+		addRef.set(newNote)
 		state.activeNote = newNote
 	},
 	EDIT: function(state, text) {
-		state.activeNote.text = text
+		ref.child(state.activeKey).update({
+			text: text
+		})
 	},
 	DELETE: function(state) {
-		state.notes.$remove(state.activeNote)
-		state.activeNote = state.notes[0]
+		ref.child(state.activeKey).set(null)
 	},
 	FAVORITE: function(state) {
 		state.activeNote.favorite = !state.activeNote.favorite
+		ref.child(state.activeKey).update({
+			favorite: state.activeNote.favorite
+		})
 	},
-	SET_ACTIVE: function(state, note) {
+	SET_ACTIVE: function(state, key, note) {
+		state.activeKey = key
 		state.activeNote = note
 	}
 }

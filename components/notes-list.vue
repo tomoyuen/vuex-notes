@@ -18,13 +18,16 @@
 					</button>
 				</div>
 			</div>
+			<div class="h3">
+				<input class="form-control" type="text" v-model="query" placeholder="Filter your notes...">
+			</div>
 		</div>
 		<div class="container">
 			<div class="list-group">
-				<a v-for="note in filteredNotes"
+				<a v-for="note in filteredNotes | byTitle query"
 					class="list-group-item" href="#"
-					:class="{active: activeNote === note}"
-					@click="updateNote(note)">
+					:class="{active: activeKey === $key}"
+					@click="updateNote($key, note)">
 					<h4 class="list-group-item-heading" v-text="note.text.trim().substring(0, 30)"></h4>
 				</a>
 			</div>
@@ -77,13 +80,15 @@
 	export default {
 		data: function() {
 			return {
-				show: 'all'
+				show: 'all',
+				query: ''
 			}
 		},
 		vuex: {
 			getters: {
 				notes: state => state.notes,
-				activeNote: state => state.activeNote
+				activeNote: state => state.activeNote,
+				activeKey: state => state.activeKey
 			},
 			actions: {
 				updateNote
@@ -91,11 +96,28 @@
 		},
 		computed: {
 			filteredNotes: function() {
+				var favoriteNotes = {}
 				if (this.show === 'all') {
 					return this.notes
 				} else if (this.show === 'favorites') {
-					return this.notes.filter(note => note.favorite)
+					for (var note in this.notes) {
+						if (this.notes[note]['favorite']) {
+							favoriteNotes[note] = this.notes[note]
+						}
+					}
+					return favoriteNotes
 				}
+			}
+		},
+		filters: {
+			byTitle (notesToFilter, filterValue) {
+				var filteredNotes = {}
+				for (let note in notesToFilter) {
+					if (notesToFilter[note]['text'].indexOf(filterValue) > -1) {
+						filteredNotes[note] = notesToFilter[note]
+					}
+				}
+				return filteredNotes
 			}
 		}
 	}
