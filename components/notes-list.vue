@@ -57,8 +57,8 @@
 }
 
 #notes-list .container {
-	height: calc(100% - 137px);
-	max-height: calc(100% - 137px);
+	height: calc(100% - 190px);
+	max-height: calc(100% - 190px);
 	overflow: auto;
 	width: 100%;
 	padding: 0;
