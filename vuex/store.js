@@ -4,11 +4,13 @@ import firebase from 'firebase'
 
 Vue.use(Vuex)
 
-firebase.initializeApp({
-	apiKey: 'radiant-inferno-8201',
-  databaseURL: 'https://radiant-inferno-8201.firebaseio.com',
-  serviceAccount: 'path/to/serviceAccountCredentials.json'
-});
+var config = {
+	apiKey: "AIzaSyCKs7Yk5RnkvaOQ2PXv8uPvYSJaMpP2RhE",
+	authDomain: "radiant-inferno-8201.firebaseapp.com",
+	databaseURL: "https://radiant-inferno-8201.firebaseio.com",
+	storageBucket: "radiant-inferno-8201.appspot.com",
+};
+firebase.initializeApp(config);
 
 const db = firebase.database(),
 	ref = db.ref('saving-data/notes'),
