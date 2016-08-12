@@ -32,7 +32,7 @@
 }
 </style>
 <script>
-	import {editNote} from '../vuex/actions'
+	import {editNote} from '../vuex/actions';
 
 	export default {
 		vuex: {

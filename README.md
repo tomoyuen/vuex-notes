@@ -5,6 +5,9 @@ notes-application-based-vuex
 - npm install
 - npm run dev
 
+### TODO
+ [ ] add markdown editor
+
 
 [参考链接1](https://segmentfault.com/a/1190000005015164)
 [参考链接2](https://segmentfault.com/a/1190000005038509)

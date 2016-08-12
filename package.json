@@ -5,6 +5,7 @@
   "main": "index.js",
   "dependencies": {
     "firebase": "^3.0.2",
+    "pen": "sofish/pen",
     "vue": "^1.0.21",
     "vuex": "^0.6.3"
   },
