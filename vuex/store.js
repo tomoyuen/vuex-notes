@@ -13,12 +13,12 @@ var config = {
 firebase.initializeApp(config);
 
 const db = firebase.database(),
-	ref = db.ref('saving-data/notes'),
-	state = {
-		notes: {},
-		activeNote: {},
-		activeKey: ''
-	};
+			ref = db.ref('saving-data/notes'),
+			state = {
+				notes: {},
+				activeNote: {},
+				activeKey: ''
+			};
 
 ref.on("value", function(snapshot) {
   state.notes = snapshot.val();
