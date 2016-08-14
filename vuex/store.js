@@ -1,8 +1,9 @@
-import Vue from 'vue'
-import Vuex from 'vuex'
-import firebase from 'firebase'
+/* global editor */
+import Vue from 'vue';
+import Vuex from 'vuex';
+import firebase from 'firebase';
 
-Vue.use(Vuex)
+Vue.use(Vuex);
 
 var config = {
 	apiKey: "AIzaSyCKs7Yk5RnkvaOQ2PXv8uPvYSJaMpP2RhE",
@@ -28,7 +29,7 @@ ref.on("value", function(snapshot) {
 const mutations = {
 	ADD: function(state) {
 		const newNote = {
-			text: 'New note',
+			text: '<p>New note</p>',
 			favorite: false
 		}
 
@@ -38,9 +39,9 @@ const mutations = {
 		addRef.set(newNote)
 		state.activeNote = newNote
 	},
-	EDIT: function(state, text) {
+	EDIT: function(state) {
 		ref.child(state.activeKey).update({
-			text: text
+			text: editor.getContent(),
 		})
 	},
 	DELETE: function(state) {
@@ -53,8 +54,8 @@ const mutations = {
 		})
 	},
 	SET_ACTIVE: function(state, key, note) {
-		state.activeKey = key
-		state.activeNote = note
+		state.activeKey = key;
+		state.activeNote = note;
 	}
 }
 

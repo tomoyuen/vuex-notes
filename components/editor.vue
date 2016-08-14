@@ -1,19 +1,21 @@
 <template>
-	<div id="note-editor">
-		<textarea
-			:value="activeNoteText"
-			@input="editNote"
+	<div class="editor-wrapper">
+		<div
+			id="note-editor"
+			@blur="editNote"
+			v-html="activeNoteText"
 			class="form-control">
-		</textarea>
+		</div>
 	</div>
 </template>
 <style>
-#note-editor {
+.editor-wrapper {
+	overflow: hidden;
 	height: 100%;
 	margin-left: 380px;
 }
 
-#note-editor textarea {
+.editor-wrapper #note-editor {
 	height: 100%;
 	border: 0;
 	border-radius: 0;
@@ -32,7 +34,7 @@
 }
 </style>
 <script>
-	import {editNote} from '../vuex/actions';
+	import { editNote } from '../vuex/actions';
 
 	export default {
 		vuex: {
@@ -44,4 +46,5 @@
 			}
 		}
 	}
+
 </script>

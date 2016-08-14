@@ -12,13 +12,13 @@
 	float: left;
 	width: 80px;
 	height: 100%;
-	background-color: #30414D;
-	color: #767676;
+	background-color: #21a28b;
+	color: #fff;
 	padding: 35px 25px 25px 25px;
 }
 
 .starred {
-	color: #F7AE4F;
+	color: #f7ae4f;
 }
 </style>
 <script>

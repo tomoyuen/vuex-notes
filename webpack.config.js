@@ -1,3 +1,5 @@
+var Path = require('path');
+
 module.exports = {
 	entry: './main.js',
 	output: {
@@ -5,6 +7,15 @@ module.exports = {
 		filename: 'build.js'
 	},
 	module: {
+		resolve: {
+	    extensions: ['', '.js', '.vue'],
+	    alias: {
+	      'src': Path.resolve(__dirname, './'),
+	    },
+	  },
+	  resolveLoader: {
+	    root: Path.join(__dirname, 'node_modules'),
+	  },
 		loaders: [
 			{
 				test: /\.vue$/,
@@ -14,7 +25,19 @@ module.exports = {
 				test: /\.js$/,
 				loader: 'babel',
 				exclude: /node_modules/
-			}
+			},
+			{
+        test: /\.css$/,
+        loader: 'style-loader!css-loader',
+      },
+      {
+        test: /\.(png|jpg|gif|svg|woff2?|eot|ttf)(\?.*)?$/,
+        loader: 'url',
+        query: {
+          limit: 10000,
+          name: '[name].[ext]?[hash:7]',
+        },
+      },
 		]
 	},
 	babel: {

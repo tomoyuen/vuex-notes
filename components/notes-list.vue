@@ -39,7 +39,7 @@
 	float: left;
 	width: 300px;
 	height: 100%;
-	background-color: #F5F5F5;
+	background-color: #f5f5f5;
 	font-family: 'Raleway', sans-serif;
 	font-weight: 400;
 }
@@ -73,9 +73,16 @@
 	font-weight: 300;
 	font-size: 15px;
 }
+.btn-group .btn:hover,
+.btn-group .btn.active {
+	outline: none;
+}
+.list-group .list-group-item.active {
+	background-color: #1abf89;
+}
 </style>
 <script>
-	import {updateNote} from '../vuex/actions'
+	import { updateNote } from '../vuex/actions'
 
 	export default {
 		data: function() {
