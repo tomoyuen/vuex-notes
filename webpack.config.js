@@ -38,6 +38,14 @@ module.exports = {
           name: '[name].[ext]?[hash:7]',
         },
       },
+      {
+      	test: require.resolve('jquery'),
+      	loader: 'expose?jQuery',
+      },
+      {
+      	test: require.resolve('pen'),
+      	loader: 'exports?window.Pen',
+      },
 		]
 	},
 	babel: {
