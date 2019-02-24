@@ -1,38 +1,54 @@
-var Path = require('path');
+const path = require('path');
+const webpack = require('webpack');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const VueLoaderPlugin = require('vue-loader/lib/plugin');
+
+const devMode = process.env.NODE_ENV !== 'production';
+
+function resolve(dir) {
+  return path.join(__dirname, dir);
+}
 
 module.exports = {
-  entry: './main.js',
+  mode: devMode ? 'development' : 'production',
+  entry: './src/main.js',
   output: {
-    path: __dirname,
-    filename: 'build.js'
+    path: resolve('dist'),
+    filename: `[name]${devMode ? '' : '.[hash]'}.js`,
+  },
+  resolve: {
+    extensions: ['.js', '.vue'],
+    alias: {
+      components: resolve('src/components'),
+    }
+  },
+  performance: {
+    hints: 'warning',
+    maxAssetSize: 200000,
+    maxEntrypointSize: 400000,
   },
   module: {
-    resolve: {
-      extensions: ['', '.js', '.vue'],
-      alias: {
-        'src': Path.resolve(__dirname, './'),
-      },
-    },
-    resolveLoader: {
-      root: Path.join(__dirname, 'node_modules'),
-    },
-    loaders: [
+    rules: [
       {
         test: /\.vue$/,
-        loader: 'vue'
+        loader: 'vue-loader'
       },
       {
         test: /\.js$/,
-        loader: 'babel',
+        loader: 'babel-loader',
         exclude: /node_modules/
       },
       {
         test: /\.css$/,
-        loader: 'style-loader!css-loader',
+        use: [
+          'vue-style-loader',
+          'style-loader',
+          'css-loader'
+        ],
       },
       {
         test: /\.(png|jpg|gif|svg|woff2?|eot|ttf)(\?.*)?$/,
-        loader: 'url',
+        loader: 'url-loader',
         query: {
           limit: 10000,
           name: '[name].[ext]?[hash:7]',
@@ -40,16 +56,26 @@ module.exports = {
       },
       {
         test: require.resolve('jquery'),
-        loader: 'expose?jQuery',
+        loader: 'expose-loader?window.jQuery',
       },
       {
         test: require.resolve('pen'),
-        loader: 'exports?window.Pen',
+        loader: 'exports-loader?window.Pen',
       },
     ]
   },
-  babel: {
-    presets: ['es2015'],
-    plugins: ['transform-runtime']
-  }
+  devtool: devMode ? 'cheap-module-eval-source-map' : false,
+  target: 'web',
+  devServer: {
+    compress: true,
+    hot: true,
+    port: process.env.PORT || 8080,
+  },
+  plugins: [
+    devMode && new webpack.HotModuleReplacementPlugin(),
+    new VueLoaderPlugin(),
+    new HtmlWebpackPlugin({
+      template: 'src/index.html'
+    }),
+  ],
 }
