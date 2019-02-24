@@ -24,12 +24,12 @@
     </div>
     <div class="container">
       <div class="list-group">
-        <a v-for="(note, key) in filteredByTypeNotes"
+        <a v-for="(val, key) in filteredNotes"
           class="list-group-item"
           :key="key"
           :class="{active: activeKey === key}"
-          @click="updateNote(key, note)">
-          <h4 class="list-group-item-heading">{{note.text}}</h4>
+          @click="setActive({val, key})">
+          <h4 class="list-group-item-heading">{{val.text | cutText}}</h4>
         </a>
       </div>
     </div>
@@ -46,7 +46,7 @@
       };
     },
     methods: mapActions([
-      'updateNote',
+      'setActive',
     ]),
     computed: {
       ...mapGetters([
@@ -54,29 +54,43 @@
         'activeNote',
         'activeKey'
       ]),
-      filteredByTypeNotes() {
-        var favoriteNotes = {}
+      filteredNotes() {
+        let temp1 = {}
         if (this.show === 'all') {
-          return this.notes
+          temp1 = this.notes;
         } else if (this.show === 'favorites') {
-          for (var note in this.notes) {
-            if (this.notes[note]['favorite']) {
-              favoriteNotes[note] = this.notes[note]
+          for (let key in this.notes) {
+            let item = this.notes[key];
+            if (item.favorite) {
+              temp1[key] = item;
             }
           }
-          return favoriteNotes
         }
-      },
-      filteredByContentNotes() {
-        var filteredNotes = {}
-        for (let note in this.filteredByTypeNotes) {
-          if (this.filteredByTypeNotes[note]['text'].indexOf(this.query) > -1) {
-            filteredNotes[note] = this.filteredByTypeNotes[note]
+
+        let temp2 = {};
+        if (this.query) {
+          for (let key in temp1) {
+            let item = this.notes[key];
+            if (item.text && item.text.indexOf(this.query) > -1) {
+              temp2[key] = item;
+            }
           }
+        } else {
+          temp2 = temp1;
         }
-        return filteredNotes
-      }
+
+        return temp2;
+      },
     },
+    filters: {
+      cutText(value) {
+        let div = document.createElement('div');
+        div.innerHTML = value;
+        let text = div.innerText;
+        div = null;
+        return text && text.trim().slice(0, 50) || '';
+      }
+    }
   }
 </script>
 <style>

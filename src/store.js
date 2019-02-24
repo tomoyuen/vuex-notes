@@ -56,9 +56,9 @@ const mutations = {
       favorite: state.activeNote.favorite
     })
   },
-  setActive(state, key, note) {
-    state.activeKey = key;
-    state.activeNote = note;
+  setActive(state, data) {
+    state.activeKey = data.key;
+    state.activeNote = data.val;
   }
 };
 
@@ -66,7 +66,7 @@ const actions = {
   addNote: ({ commit }) => commit('add'),
   editNote: ({ commit }, event) => commit('edit', event.target.value),
   deleteNote: ({ commit }) => commit('delete'),
-  updateNote: ({ commit }, key, note) => commit('setActive', key, note),
+  setActive: ({ commit }, payload) => commit('setActive', payload),
   favoriteNote: ({ commit }) => commit('favorite'),
 };
 
