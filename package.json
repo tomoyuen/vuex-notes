@@ -4,7 +4,7 @@
   "description": "a markdown notes.",
   "main": "index.js",
   "dependencies": {
-    "firebase": "^5.8.4",
+    "firebase": "^7.14.5",
     "jquery": "^3.5.0",
     "pen": "sofish/pen",
     "vue": "^2.6.7",
